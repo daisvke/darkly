@@ -1,3 +1,6 @@
+# SQL injection on the member search field in the members page
+
+## Description
 We identified a security vulnerability in the input field located at `http://IP/index.php?page=member`.
 
 Entering certain input, such as `union` triggers a SQL error that indicates SQL expressions are treated as intended rather than being escaped or treated as regular strings. This vulnerability allows us to exploit the system and extract data from the database by sending requests through the input field.<br />
@@ -12,14 +15,15 @@ To append our request after the original query, we can use the `UNION` operator,
 ```
 SELECT first_name, last_name FROM users WHERE users.user_id = -1 UNION SELECT XXX FROM XXX
 ```
-
+This allows us to execute our exploit immediately after the original request.<br />
+<br />
 We aim to retrieve data from the `information_schema`. In SQL, `information_schema` is a schema providing metadata about database objects. We are particularly interested in the `table_name` and `column_name` columns from `information_schema.columns` to understand the general structure of the database.<br />
 <br />
 With this in mind, we have:<br />
 <br />
 INPUT:
 ```
--1 UNION SELECT table_name, column_name FROm information_schema.columns
+-1 UNION SELECT table_name, column_name FROM information_schema.columns
 ```
 
 OUTPUT:
@@ -99,3 +103,28 @@ user@kali:~$ echo -n "fortytwo" | sha256sum
 10a16d834f9b1e4068b25c4c46fe0284e99e44dceaf08098fc83925ba6310ff5  -
 ```
 Thus, the flag is `10a16d834f9b1e4068b25c4c46fe0284e99e44dceaf08098fc83925ba6310ff5`.
+
+## Security measures
+Inspecting the HTML code, this line:
+```
+<a href="index.php">Home</a>
+```
+reveals that the website is coded in `PHP`.<br />
+To avoid SQL injection in PHP, it is recommended to use `prepared statements` with `parameterized queries`. Below are examples demonstrating how to use prepared statements in PHP with MySQL using the `PDO extension`:
+
+```
+// Connect to database
+$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// Example with positional parameters
+$userInput = "John";
+$stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+$stmt->execute([$userInput]);
+   
+// Example with named parameters
+$userInput = "John";
+$stmt = $conn->prepare("SELECT * FROM users WHERE username = :username");
+$stmt->execute(['username' => $userInput]);
+```
+In both examples, the user input is properly bound to the SQL query using placeholders (`?` for positional parameters or `:username` for named parameters). This way, the input is treated as data, preventing SQL injection attacks.
