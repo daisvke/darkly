@@ -25,8 +25,10 @@ while read -r word; do
 	hashed_word=$(echo -n $word | md5sum | awk '{print $1}');
 
 	if [[ "$hashed_word" == "$hashed_pwd" ]]; then
-		echo -e "\033[32mHASHES MATCH: $word\033[0m";
+		echo -e "\033[32mHASHES MATCH FOR: '$word'\033[0m"
+		echo "Found match, exiting..."
+		break
 	else
-		echo "no match found for: $word";
+		echo "no match found for: '$word'";
 	fi
 done < "$wordlist_file_path"
