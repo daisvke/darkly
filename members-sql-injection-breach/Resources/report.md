@@ -1,0 +1,4 @@
+
+```
+bash md5comparer.sh wordlist.txt 5ff9d0165b4f92b14994e5c685cdce28
+```
