@@ -1,2 +1,2 @@
 # darkly
-This project is an introduction to cyber security in the field of the Web
+This project serves as an introduction to cybersecurity within the realm of the web, presented in the form of a Capture The Flag (CTF) challenge.
