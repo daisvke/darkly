@@ -23,12 +23,14 @@ IFS=
 # to the hashed password
 while read -r word; do
 	hashed_word=$(echo -n $word | md5sum | awk '{print $1}');
+	echo "password: $hashed_pwd";
+	echo "hash: $hashed_word";
 
 	if [[ "$hashed_word" == "$hashed_pwd" ]]; then
 		echo -e "\033[32mHASHES MATCH FOR: '$word'\033[0m"
-		echo "Found match, exiting..."
+		echo -e "\nFound match, exiting..."
 		break
 	else
-		echo "no match found for: '$word'";
+		echo -e "no match found for: '$word'\n";
 	fi
 done < "$wordlist_file_path"

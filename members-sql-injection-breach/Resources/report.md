@@ -1,10 +1,13 @@
 # SQL injection on the member search field in the members page
 
-## Description
-We identified a security vulnerability in the input field located at `http://IP/index.php?page=member`.
+## Vulnerability Details:
 
-Entering certain input, such as `union` triggers a SQL error that indicates SQL expressions are treated as intended rather than being escaped or treated as regular strings. This vulnerability allows us to exploit the system and extract data from the database by sending requests through the input field.<br />
-<br />
+### Affected URL: `http://{IP_ADDR}/index.php?page=member`
+
+### Issue Description:
+Entering certain input, such as `union` triggers a SQL error that indicates SQL expressions are treated as intended rather than being escaped or treated as regular strings. This vulnerability allows us to exploit the system and extract data from the database by sending requests through the input field.
+
+### Potential Exploitation:
 Since the input field expects an ID number, the corresponding SQL query should resemble:
 ```
 SELECT first_name, last_name FROM users WHERE users.user_id = ${input_value}
@@ -76,7 +79,7 @@ Possible Hashs:
 
 Now, it has been determined that the password is likely hashed with `MD5`. We will proceed to generate a word list in `wordlist.txt` and create a script named `md5comparer.sh`. The script will hash each word from the word list using MD5 and compare the generated hashes with the password until a match is found:
 ```
-user@kali:~$ bash md5comparer.sh wordlist.txt 5ff9d0165b4f92b14994e5c685cdce28
+user@kali:~$ ./md5comparer.sh wordlist.txt $(cat pwd.txt)
 no match found for: 'quarantedeux'
 no match found for: 'quarante-deux'
 no match found for: 'quarante_deux'
@@ -104,7 +107,7 @@ user@kali:~$ echo -n "fortytwo" | sha256sum
 ```
 Thus, the flag is `10a16d834f9b1e4068b25c4c46fe0284e99e44dceaf08098fc83925ba6310ff5`.
 
-## Security measures
+## Immediate Action Required:
 Inspecting the HTML code, this line:
 ```
 <a href="index.php">Home</a>
