@@ -42,6 +42,8 @@ while [ "$limit" -gt 0 ]; do
 	fi
 
 	# Decrement the limit
+	((--limit))
 
 	# Sleep between mails
 	sleep 1
+done
