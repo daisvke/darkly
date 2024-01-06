@@ -12,7 +12,6 @@ This vulnerability allows an attacker to perform an "email bombing", by creating
 This directory includes a bash script that can perform such an attack.
 
 ## Immediate Action Required:
-
 To mitigate this risk, we recommend the following actions be taken immediately:
 
 ### Temporary Disabling of the Form:
