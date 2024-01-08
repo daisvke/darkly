@@ -14,7 +14,7 @@ SELECT first_name, last_name FROM users WHERE users.user_id = ${input_value}
 ```
 This query prints the first name and last name of the member with the given member ID. Since we don't need the website to display data about any specific member, we can choose the ID `-1`, which is unlikely to match any existing ID.<br />
 <br />
-To append our request after the original query, we can use the `UNION` operator, which combines the result sets of two or more `SELECT` statements:
+To append our request after the original query, we can use the `UNION` operator, and perform an UNION-based SQL injection attempt, which combines the result sets of two or more `SELECT` statements:
 ```
 SELECT first_name, last_name FROM users WHERE users.user_id = -1 UNION SELECT XXX FROM XXX
 ```
