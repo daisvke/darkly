@@ -14,10 +14,10 @@ This directory includes a bash script that can perform such an attack.
 ## Immediate Action Required:
 To mitigate this risk, we recommend the following actions be taken immediately:
 
-### Temporary Disabling of the Form:
+* Temporary Disabling of the Form:
 	Disable the webmaster recovery form at http://{IP_ADDR}/index.php?page=recover to prevent further exploitation until the vulnerability is addressed.
 
-### Review and Patch the Code:
+* Review and Patch the Code:
     Conduct a thorough review of the code associated with the form and implement necessary patches to remove the email address from the hidden input tag.
 
 ## Documentation
