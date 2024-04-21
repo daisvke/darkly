@@ -46,6 +46,8 @@ def scrape_website(root_addr, directory):
 					print(full_url)
 					scrape_website(url + "/", href)
 				else: print_file_content(full_url)
+	else:
+		print('Failed to fetch the page:', response.status_code)
 				
 if __name__ == "__main__":
     # Check if an IP address is provided as a command-line argument

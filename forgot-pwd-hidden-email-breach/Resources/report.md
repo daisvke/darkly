@@ -6,6 +6,7 @@
 
 ### Issue Description:
 Upon careful examination, we discovered that the hidden input tag within the webmaster's password recovery form contains the email address of the webmaster. This oversight presents a potential security loophole that could be exploited by malicious actors.
+The flag appears when submitting the form after having changed the input type of the hidden input, positioned above the submit button, to "text".
 
 ### Potential Exploitation:
 This vulnerability allows an attacker to perform an "email bombing", by creating a loop that continuously sends a large volume of emails to the webmaster's email address. Such an attack could lead to service disruption, overload the email server, and compromise the overall stability of the system.

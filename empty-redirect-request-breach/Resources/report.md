@@ -27,4 +27,4 @@ The immediate actions required to address the potential security issues are as f
     Implement proper input validation and sanitization for the "site" parameter. Ensure that only valid and expected values are accepted. Reject any input that does not conform to the expected format.
 
 * Avoid Redundant or Unnecessary Redirects:
-    If the "site" parameter is used for redirection, ensure that the redirection logic is necessary and safe. Avoid unnecessary redirects, especially if they involve external websites. If possible, use a whitelist approach to define a set of allowed domains
+    If the "site" parameter is used for redirection, ensure that the redirection logic is necessary and safe. Avoid unnecessary redirects, especially if they involve external websites. If possible, use a whitelist approach to define a set of allowed domains.
