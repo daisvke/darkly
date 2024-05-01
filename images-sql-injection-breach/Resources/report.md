@@ -10,7 +10,7 @@ This security issue pertains to a vulnerability in the SQL injection within the 
 ### Potential Exploitation:
 Since the input field expects an ID number, the corresponding SQL query should resemble:
 ```
-SELECT title, url FROM users WHERE images.id = ${input_value}
+SELECT title, url FROM list_images WHERE images.id = ${input_value}
 ```
 The query would print the title and the url of the image with the given image ID. Since we don't need the website to display data about any specific image, we can choose the ID `-1`, which is unlikely to match any existing ID.<br />
 <br />
@@ -40,7 +40,7 @@ Title: comment
 Url : list_images
 ```
 
-The result reveals a `list_images` table, which should correspond to the available table, and two interesting columns: `title` and `comment`. Subsequently, we will send the following request to retrieve these two fields from all users in the database:<br />
+The result reveals a `list_images` table, which should correspond to the available table, and two interesting columns: `title` and `comment`. Subsequently, we will send the following request to retrieve these two fields from all images in the database:<br />
 <br />
 INPUT:
 ```
