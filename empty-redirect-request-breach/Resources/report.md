@@ -5,7 +5,8 @@
 ### Affected URL: `http://{IP_ADDR}/index.php?page=redirect&site=`
 
 ### Issue Description:
-If the parameter "site=" is not properly protected and can be left empty, it could potentially lead to security issues, particularly related to URL parameter manipulation and open redirect vulnerabilities. 
+If the parameter "site=" is not properly protected and can be left empty, it could potentially lead to security issues, particularly related to URL parameter manipulation and open redirect vulnerabilities. <br />
+Here, any unexpected value will reveal the flag.
 
 ## Potential Exploitation:
 Here are some risks associated with this scenario:
