@@ -2,7 +2,7 @@
 
 ## Vulnerability Details:
 
-### Affected URL: `http://{IP_ADDR}/index.php?page=member`
+### Affected URL: `http://{IP_ADDR}/index.php?page=member&id=`
 
 ### Issue Description:
 Entering certain input, such as `union` triggers a SQL error that indicates SQL expressions are treated as intended rather than being escaped or treated as regular strings. This vulnerability allows us to exploit the system and extract data from the database by sending requests through the input field.
