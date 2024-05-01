@@ -2,7 +2,7 @@
 
 ## Vulnerability Details:
 
-### Affected URL: `http://192.168.56.102/?page=searchimg&id=`
+### Affected URL: `http://{IP_ADDR}/?page=searchimg&id=`
 
 ### Issue Description:
 This security issue pertains to a vulnerability in the SQL injection within the website. SQL expressions are treated as intended rather than being escaped or treated as regular strings. This vulnerability allows us to exploit the system and extract data from the database by sending requests through the input field.
