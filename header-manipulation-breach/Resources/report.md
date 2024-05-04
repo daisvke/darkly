@@ -15,7 +15,6 @@ Based on our analysis, we infer that these directives pertain to the `User-Agent
 ## Exploitation Strategy:
 
 ### Modifying HTTP Request with Burp Suite:
-
 To verify our hypothesis and exploit the vulnerability, we employed `Burp Suite` to intercept and modify the `HTTP request`. Specifically, we adjusted the following headers:
 <br /><br />
 BEFORE:
