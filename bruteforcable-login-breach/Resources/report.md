@@ -2,8 +2,7 @@
 
 ## Vulnerability Discovery:
 
-### Affected URL:
-`http://{IP_ADDR}/index.php?page=signin`
+### Affected URL: `http://{IP_ADDR}/index.php?page=signin`
 
 ### Issue Description:
 We discovered a potential security vulnerability related to the authentication mechanism. It appears that the login functionality is susceptible to brute force attacks due to inadequate password strength enforcement.
